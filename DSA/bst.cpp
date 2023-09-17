@@ -23,7 +23,7 @@ class node
     }
 };
 
-node* insertIntoBst(node* root, int data)
+node* insertIntoBst(node* &root, int data)
 {
     if(root == NULL)
     {
@@ -48,16 +48,75 @@ void createBst(node* &root)
     cin >> data;
     while(data != -1)
     {
-        insertIntoBst(root, data);
+        root = insertIntoBst(root, data);
         cin >> data;
     }
 }
 
+bool searchBst(node* root, int data)
+{
+    if(root == NULL)
+    {
+        return false;
+    }
+    else if(root -> data == data)
+    {
+        return true;
+    }
+    else if (root -> data < data)
+    {
+        return searchBst(root -> right, data);
+    }
+    else
+    {
+        return searchBst(root -> left, data);
+    }
+}
 
+void inorder(node* root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    inorder(root ->left);
+    cout << root -> data << " ";
+    inorder(root -> right);
+}
+
+void postorder(node* root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    postorder(root -> left);
+    postorder(root -> right);
+    cout << root -> data << " ";
+}
+
+void preorder(node* root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    cout << root -> data << " ";
+    preorder(root -> left);
+    preorder(root -> right);
+}
 
 int main()
 {
     node* root = NULL;
     createBst(root);
+    cout << searchBst(root,10) << endl;
+    cout << searchBst(root,20) << endl;
+    inorder(root);
+    cout << endl;
+    postorder(root);
+    cout << endl;
+    preorder(root);
+    cout << endl;
     return 0;
 }
